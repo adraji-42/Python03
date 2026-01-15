@@ -1,0 +1,89 @@
+from math import sqrt
+
+
+def position_parsing(coordinates: str):
+    """
+    Convert a comma-separated string into a 3D coordinate tuple.
+
+    Args:
+        coordinates (str): A string containing three integers separated
+            by commas (e.g., "10,20,30").
+
+    Returns:
+        tuple: A tuple of three integers (x, y, z).
+    """
+
+    parts = coordinates.split(",")
+
+    if len(parts) != 3:
+        raise ValueError(
+                "Error parsing coordinates: "
+                "Expected 3 values separated by commas, like: 'x,y,z'."
+            )
+
+    position = []
+    for part in parts:
+        try:
+            position.append(int(part))
+        except ValueError:
+            raise ValueError(
+                    "Error parsing coordinates: "
+                    f"Invalid literal for int() with base 10: '{part}'",
+
+                    "Error details - Type: ValueError, Args: "
+                    f"(\"invalid literal for int() with base 10: '{part}'\",)"
+                )
+
+    position = tuple(position)
+    print(f"Parsed position: {position}")
+    return position
+
+
+def calculating_distance(
+            position1: tuple[int, int, int], position2: tuple[int, int, int]
+            ):
+    x1, y1, z1 = position1
+    x2, y2, z2 = position2
+
+    return sqrt((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)
+
+
+def main():
+
+    print("=== Game Coordinate System ===", end="\n\n")
+
+    origin = (0, 0, 0)
+    coordinates = (10, 20, 5)
+
+    print(f"Position created: {coordinates}")
+    print(f"Distance between {origin} and {coordinates}:"
+          f"{calculating_distance(origin, coordinates):.1f}\n")
+
+    print("Parsing coordinates: \"3,4,0\"")
+    try:
+        position = position_parsing("3,4,0")
+    except ValueError as error:
+        print(error)
+    else:
+        print(f"Distance between {origin} and {position}:"
+              f"{calculating_distance(origin, position):.1f}\n")
+
+    bad_coordinates = "abc,def,ghi"
+    print(f"Parsing invalid coordinates: \"{bad_coordinates}\"")
+    try:
+        position = position_parsing(bad_coordinates)
+    except ValueError as error:
+        print(error.args[0])
+        print(error.args[1], end="\n\n")
+    else:
+        print(f"Distance between {origin} and {position}:"
+              f"{calculating_distance(origin, position):.1f}\n")
+
+    print("Unpacking demonstration:")
+    x, y, z = position
+    print(f"Player at x={x}, y={y}, z={z}")
+    print(f"Coordinates: X={x}, Y={y}, Z={z}")
+
+
+if __name__ == "__main__":
+    main()
