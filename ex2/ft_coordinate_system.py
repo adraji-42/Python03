@@ -17,24 +17,18 @@ def position_parsing(coordinates: str):
 
     if len(parts) != 3:
         raise ValueError(
-                "Error parsing coordinates: "
+                "Error in coordinate parsing:\n"
                 "Expected 3 values separated by commas, like: 'x,y,z'."
             )
 
-    position = []
-    for part in parts:
-        try:
-            position.append(int(part))
-        except ValueError:
-            raise ValueError(
-                    "Error parsing coordinates: "
-                    f"Invalid literal for int() with base 10: '{part}'",
+    try:
+        position = tuple([int(part) for part in parts])
+    except ValueError as error:
+        raise ValueError(
+                "Error in coordinate parsing:\n"
+                f"Error details - Type: ValueError | Error: {error}"
+            )
 
-                    "Error details - Type: ValueError, Args: "
-                    f"(\"invalid literal for int() with base 10: '{part}'\",)"
-                )
-
-    position = tuple(position)
     print(f"Parsed position: {position}")
     return position
 
@@ -56,14 +50,22 @@ def main():
     coordinates = (10, 20, 5)
 
     print(f"Position created: {coordinates}")
-    print(f"Distance between {origin} and {coordinates}:"
-          f"{calculating_distance(origin, coordinates):.1f}\n")
+
+    try:
+        print(
+            f"Distance between {origin} and {coordinates}:"
+            f"{calculating_distance(origin, coordinates):.1f}\n"
+        )
+    except Exception as error:
+        print(f"Unexpected Erro: {error}")
 
     print("Parsing coordinates: \"3,4,0\"")
     try:
         position = position_parsing("3,4,0")
     except ValueError as error:
         print(error)
+    except Exception as error:
+        print(f"Unexpected Erro: {error}")
     else:
         print(f"Distance between {origin} and {position}:"
               f"{calculating_distance(origin, position):.1f}\n")
@@ -73,8 +75,9 @@ def main():
     try:
         position = position_parsing(bad_coordinates)
     except ValueError as error:
-        print(error.args[0])
-        print(error.args[1], end="\n\n")
+        print(error, end="\n\n")
+    except Exception as error:
+        print(f"Unexpected Erro: {error}")
     else:
         print(f"Distance between {origin} and {position}:"
               f"{calculating_distance(origin, position):.1f}\n")

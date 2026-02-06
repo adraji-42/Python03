@@ -1,6 +1,21 @@
 from sys import argv
 
 
+def scores_analysis(scores: list[int]) -> None:
+
+    n_scores = len(scores)
+    t_scores = sum(scores)
+    max_scores = max(scores)
+    min_scores = min(scores)
+    print(f"Scores processed: {scores}")
+    print(f"Total players: {n_scores}")
+    print(f"Total score: {t_scores}")
+    print(f"Average score: {t_scores / n_scores:.1f}")
+    print(f"High score: {max_scores}")
+    print(f"Low score: {min_scores}")
+    print(f"Score range: {max_scores - min_scores}", end="\n\n")
+
+
 def main():
 
     args = argv[1:]
@@ -13,24 +28,15 @@ def main():
         return
 
     try:
-        scores = []
-        for arg in args:
-            scores.append(int(arg))
-    except ValueError:
-        print("Pleas enter valide number")
-        return
-
-    number_scors = len(scores)
-    totale_scors = sum(scores)
-    max_scors = max(scores)
-    min_scors = min(scores)
-    print(f"Scores processed: {scores}")
-    print(f"Total players: {number_scors}")
-    print(f"Total score: {totale_scors}")
-    print(f"Average score: {totale_scors / number_scors:.1f}")
-    print(f"High score: {max_scors}")
-    print(f"Low score: {min_scors}")
-    print(f"Score range: {max_scors - min_scors}", end="\n\n")
+        scores = [int(score) for score in (args)]
+        if min(scores) < 0:
+            print("Score cannot be negative")
+            return
+        scores_analysis(scores)
+    except ValueError as error:
+        print(f"Pleas enter a valide numbers, {error}")
+    except Exception as error:
+        print(f"Unexpected Erro: {error}")
 
 
 if __name__ == "__main__":

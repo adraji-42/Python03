@@ -6,21 +6,21 @@ def main():
     print("=== Command Quest ===")
 
     program_name, *args = argv
-    len_args = len(args)
+    args_len = len(args)
 
-    if len_args == 0:
+    if args_len == 0:
         print("No arguments provided!")
 
     print(f"Program name: {program_name}")
 
-    if len_args > 0:
-        print(f"Arguments received: {len_args}")
+    if args_len > 0:
+        print(f"Arguments received: {args_len}")
         i = 1
         for arg in args:
             print(f"Argument {i}: {arg}")
             i += 1
 
-    print(f"Total arguments: {len_args + 1}", end="\n\n")
+    print(f"Total arguments: {args_len + 1}", end="\n\n")
 
 
 if __name__ == "__main__":

@@ -1,51 +1,111 @@
-def diff_players(player1: list[str, set], player2: list[str, set]):
+def get_all_unique_achievements(
+    players_data: dict[str, set]
+) -> set:
+    """Gather every unique achievement across all players.
 
-    print
+    Args:
+        players_data: Dictionary with player names and their sets.
+
+    Returns:
+        A set containing all unique achievements found.
+    """
+    all_ach: set = set()
+
+    for achievements in players_data.values():
+        all_ach = all_ach.union(achievements)
+
+    return all_ach
 
 
-def main():
-    print("=== Achievement Tracker System ===", end="\n\n")
+def get_common_to_all(
+    players_data: dict[str, set]
+) -> set:
+    """Find achievements that every single player has unlocked.
 
-    # Data dictionary for players
-    players = {
-        "Chaos": {"first_kill", "level_10", "treasure_hunter", "speed_demon"},
-        "rida2015": {"first_kill", "level_10", "boss_slayer", "collector"},
-        "Spacha": {
-            "level_10", "treasure_hunter",
-            "boss_slayer", "speed_demon", "perfectionist"
+    Args:
+        players_data: Dictionary with player names and their sets.
+
+    Returns:
+        A set of achievements common to all players.
+    """
+    if not players_data:
+        return set()
+
+    sets_list = list(players_data.values())
+    common = sets_list[0]
+
+    for other_set in sets_list[1:]:
+        common = common.intersection(other_set)
+
+    return common
+
+
+def get_rare_achievements(
+    players_data: dict[str, set]
+) -> set:
+    """Identify achievements held by exactly one player.
+
+    Args:
+        players_data: Dictionary with player names and their sets.
+
+    Returns:
+        A set of rare achievements.
+    """
+    rare: set = set()
+
+    for name, ach in players_data.items():
+        others: set = set().union(
+            *(s for n, s in players_data.items() if n != name)
+        )
+        rare = rare.union(ach.difference(others))
+
+    return rare
+
+
+def diff_in_two_players(
+    p1_name: str, p1_ach: set,
+    p2_name: str, p2_ach: set
+) -> None:
+    """Compare achievements between two specific players.
+
+    Args:
+        p1_name: Name of the first player.
+        p1_ach: Achievement set of the first player.
+        p2_name: Name of the second player.
+        p2_ach: Achievement set of the second player.
+    """
+    print(f"{p1_name} vs {p2_name} common: {p1_ach.intersection(p2_ach)}")
+    print(f"{p1_name} unique: {p1_ach.difference(p2_ach)}")
+    print(f"{p2_name} unique: {p2_ach.difference(p1_ach)}")
+
+
+def main() -> None:
+    """Initialize dynamic player data and display analytics."""
+    players: dict[str, set] = {
+        'Chaos': {'first_kill', 'level_10', 'treasure_hunter', 'speed_demon'},
+        'Spasha': {'first_kill', 'level_10', 'boss_slayer', 'collector'},
+        'Darius': {
+            'level_10', 'treasure_hunter', 'boss_slayer', 'perfectionist'
         }
     }
 
-    achievement_sets = []
-    for player, achievements in players.items():
-        print(f"Player {player} achievements: {achievements}")
-        achievement_sets.append(achievements)
+    print("=== Achievement Tracker System ===")
+    for name, achs in players.items():
+        print(f"Player {name} achievements: {achs}")
 
-    # 1. All unique achievements
-    unique_all = set().union(*achievement_sets)
-
-    # 2. Common to all players
-    common_all = achievement_sets[0].intersection(*achievement_sets[1:])
-
-    # 3. Rare achievements (strictly appearing in only one set)
-    rare_all = set()
-    for name, current_set in players.items():
-        # Combine all other players' achievements
-        others = set().union(
-            *(s for n, s in players.items() if n != name)
-        )
-        rare_all = rare_all.union(current_set.difference(others))
+    all_unique = get_all_unique_achievements(players)
+    common = get_common_to_all(players)
+    rare = get_rare_achievements(players)
 
     print("\n=== Achievement Analytics ===")
-    print(f"All unique achievements: {unique_all}")
-    print(f"Total unique achievements: {len(unique_all)}", end="\n\n")
+    print(f"All unique achievements: {all_unique}")
+    print(f"Total unique achievements: {len(all_unique)}")
+    print(f"Common to all players: {common}")
+    print(f"Rare achievements (1 player): {rare}")
 
-    print(f"Common to all players: {common_all}")
-    print(f"Rare achievements (1 player): {rare_all}", end="\n\n")
-
-    player1 = "Chaos"
-    player2 = "Spacha"
-    diff_players([player1, players[player1]], [player2, players[player2]])
+    diff_in_two_players(
+        "Chaos", players['Chaos'], "Spasha", players['Spasha']
+    )
 
 
 if __name__ == "__main__":
