@@ -1,4 +1,18 @@
-def main():
+def comprehension() -> None:
+    """
+    Provides a dashboard for game analytics
+    using various comprehension techniques.
+
+    This function processes player data (level, score, sessions, achievements)
+    using List, Dict, and Set comprehensions to demonstrate efficient data
+    filtering and transformation in Python.
+
+    Args:
+        None.
+
+    Returns:
+        None.
+    """
 
     print("=== Game Analytics Dashboard ===\n")
 
@@ -59,32 +73,42 @@ def main():
 
     print("=== List Comprehension Examples ===\n")
 
-    high_score = [
-        p['score'] for p in players.values() if p['score'] > 2000
-    ]
-    doubel_score = [p['score'] * 2 for p in players.values()]
-    acitve_players = [
-        p for p in players
-        if players[p]['sessions_played'] > 40
-    ]
+    try:
+        high_score = [
+            p['score'] for p in players.values() if p['score'] > 2000
+        ]
+        double_score = [p['score'] * 2 for p in players.values()]
+        active_players = [
+            p for p in players
+            if players[p]['sessions_played'] > 40
+        ]
+    except (KeyError, ValueError):
+        print("Error: Invalide players data in list comprehension.")
+    except Exception as e:
+        print(f"Unexpected error in list comprehension. {e}")
 
     print("High scorers (+2000):", high_score)
-    print("Scores doubled:", doubel_score)
-    print("Active players:", acitve_players, end="\n\n")
+    print("Scores doubled:", double_score)
+    print("Active players:", active_players, end="\n\n")
 
     print("=== Dict Comprehension Examples ===")
 
-    player_scores = {name: data['score'] for name, data in players.items()}
-    level_categories = {
-        "high": len([n for n, d in players.items() if d['level'] >= 30]),
-        "medium": len(
-            [n for n, d in players.items() if 20 <= d['level'] < 30]
-        ),
-        "low": len([n for n, d in players.items() if d['level'] < 20])
-    }
-    achievement_counts = {
-        name: len(data['achievements']) for name, data in players.items()
-    }
+    try:
+        player_scores = {name: data['score'] for name, data in players.items()}
+        level_categories = {
+            "high": len([n for n, d in players.items() if d['level'] >= 30]),
+            "medium": len(
+                [n for n, d in players.items() if 20 <= d['level'] < 30]
+            ),
+            "low": len([n for n, d in players.items() if d['level'] < 20])
+        }
+        achievement_counts = {
+            name: len(data['achievements']) for name, data in players.items()
+        }
+    except (KeyError, ValueError):
+        print("Error: Invalide players data in dict comprehension.")
+    except Exception as e:
+        print(f"Unexpected error in dict comprehension. {e}")
 
     print(f"Player scores: {player_scores}")
     print(f"Score categories: {level_categories}")
@@ -92,11 +116,16 @@ def main():
 
     print("=== Set Comprehension Examples ===")
 
-    unique_players = {player for player in players}
-    unique_ach = {
-        ach for data in players.values() for ach in data['achievements']
-    }
-    regions = {data['region'] for data in players.values()}
+    try:
+        unique_players = {player for player in players}
+        unique_ach = {
+            ach for data in players.values() for ach in data['achievements']
+        }
+        regions = {data['region'] for data in players.values()}
+    except (KeyError, ValueError):
+        print("Error: Invalide players data in set comprehension.")
+    except Exception as e:
+        print(f"Unexpected error in set comprehension. {e}")
 
     print("Unique players:", unique_players)
     print("Unique achievements:", unique_ach)
@@ -104,4 +133,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    comprehension()

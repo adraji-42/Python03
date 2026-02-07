@@ -1,7 +1,13 @@
 from sys import argv
 
 
-def main():
+def main() -> None:
+    """
+    Processes command-line arguments and displays them to the user.
+
+    Args:
+        None (Uses sys.argv directly).
+    """
 
     print("=== Command Quest ===")
 

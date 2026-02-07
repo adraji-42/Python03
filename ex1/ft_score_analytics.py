@@ -2,6 +2,12 @@ from sys import argv
 
 
 def scores_analysis(scores: list[int]) -> None:
+    """
+    Performs statistical analysis on a list of player scores.
+
+    Args:
+        scores (list[int]): A list of integer scores to be analyzed.
+    """
 
     n_scores = len(scores)
     t_scores = sum(scores)
@@ -16,7 +22,10 @@ def scores_analysis(scores: list[int]) -> None:
     print(f"Score range: {max_scores - min_scores}", end="\n\n")
 
 
-def main():
+def main() -> None:
+    """
+    Entry point of the script that handles command-line input.
+    """
 
     args = argv[1:]
 

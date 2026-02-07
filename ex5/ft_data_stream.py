@@ -4,8 +4,9 @@ import sys
 time = sys.modules.get('time')
 
 
-def lcg_generator():
-    """Generates random numbers without using any imports.
+def lcg_generator() -> object:
+    """
+    Generates random numbers without using any imports.
 
     Yields:
         A random integer.
@@ -20,8 +21,9 @@ def lcg_generator():
         yield current
 
 
-def lol_event_generator():
-    """Generates a stream of mock game events.
+def lol_event_generator() -> object:
+    """
+    Generates a stream of mock game events.
 
     Args:
         count: The total number of events to generate.
@@ -48,7 +50,7 @@ def lol_event_generator():
         yield players[p_index], next(lsc_gen) % 18, lol_events[e_index]
 
 
-def fibonacci_gen(limit: int):
+def fibonacci_gen(limit: int) -> object:
     """
     Generates a sequence of Fibonacci numbers.
 
@@ -58,14 +60,17 @@ def fibonacci_gen(limit: int):
     Yields:
         The next number in the Fibonacci sequence.
     """
+    if limit < 0:
+        raise ValueError("limit must be a positeve")
     a, b = 0, 1
     for _ in range(limit):
         yield a
         a, b = b, a + b
 
 
-def prime_gen(limit: int):
-    """Generates a sequence of prime numbers.
+def prime_gen(limit: int) -> object:
+    """
+    Generates a sequence of prime numbers.
 
     Args:
         limit: The number of prime numbers to produce.
@@ -90,7 +95,16 @@ def prime_gen(limit: int):
         num += 1
 
 
-def proces_lol_events(event_num):
+def process_lol_events(event_num) -> None:
+    """
+    Simulates and analyzes a series of League of Legends game events.
+
+    Args:
+        event_num (int): The number of game events to process.
+
+    Returns:
+        None.
+    """
 
     print(f"Processing {event_num} league of legends game events...")
 
@@ -125,18 +139,36 @@ def proces_lol_events(event_num):
     print(f"Processing time: ({(end - start):.3f}) seconds")
 
 
-def main():
+def main() -> None:
+    """
+    Executes the main demonstration flow of the script.
+
+    Args:
+        None.
+
+    Returns:
+        None.
+    """
 
     print("=== Game Data Stream Processor ===\n")
 
-    proces_lol_events(1000)
+    try:
+        process_lol_events(1000)
+    except Exception as e:
+        print(f"Unexpected error processing events. {e}")
 
     print("=== Generator Demonstration ===")
-    fib_list = [n.__str__() for n in fibonacci_gen(10)]
-    print("Fibonacci sequence (first 10):", ', '.join(fib_list))
+    try:
+        fib_list = [n.__str__() for n in fibonacci_gen(10)]
+        print("Fibonacci sequence (first 10):", ', '.join(fib_list))
+    except Exception as e:
+        print(f"Unexpected error in fibonacci sequence. {e}")
 
-    prime_list = [n.__str__() for n in prime_gen(5)]
-    print("Prime numbers (first 5):", ', '.join(prime_list))
+    try:
+        prime_list = [n.__str__() for n in prime_gen(5)]
+        print("Prime numbers (first 5):", ', '.join(prime_list))
+    except Exception as e:
+        print(f"Unexpected error in prime numbers sequence. {e}")
 
 
 if __name__ == "__main__":

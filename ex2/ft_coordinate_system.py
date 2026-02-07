@@ -1,7 +1,7 @@
 from math import sqrt
 
 
-def position_parsing(coordinates: str):
+def position_parsing(coordinates: str) -> tuple[int, int, int]:
     """
     Convert a comma-separated string into a 3D coordinate tuple.
 
@@ -35,14 +35,29 @@ def position_parsing(coordinates: str):
 
 def calculating_distance(
             position1: tuple[int, int, int], position2: tuple[int, int, int]
-            ):
+            ) -> float:
+    """
+    Calculates the Euclidean distance between two points in 3D space.
+
+    Args:
+        position1 (tuple[int, int, int]):
+        The (x, y, z) coordinates of the first point.
+        position2 (tuple[int, int, int]):
+        The (x, y, z) coordinates of the second point.
+
+    Returns:
+        float: The straight-line distance between the two points.
+    """
     x1, y1, z1 = position1
     x2, y2, z2 = position2
 
     return sqrt((x2 - x1)**2 + (y2 - y1)**2 + (z2 - z1)**2)
 
 
-def main():
+def main() -> None:
+    """
+    Demonstrates coordinate parsing, distance calculation, and error handling.
+    """
 
     print("=== Game Coordinate System ===", end="\n\n")
 

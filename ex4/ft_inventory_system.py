@@ -1,7 +1,8 @@
 def create_item(
     name: str, category: str, rarity: str, quantity: int, price: int
 ) -> dict:
-    """Helper function to create an item structure.
+    """
+    Helper function to create an item structure.
 
     Args:
         name: The display name of the item.
@@ -34,7 +35,8 @@ def create_item(
 
 
 def display_inventory(name: str, inventory: dict[str, dict]) -> None:
-    """Prints a detailed report of a player's inventory.
+    """
+    Prints a detailed report of a player's inventory.
 
     Args:
         name: The name of the player.
@@ -73,7 +75,8 @@ def transaction(
     item_name: str,
     quantity: int
 ) -> None:
-    """Handles item transfer between two players.
+    """
+    Handles item transfer between two players.
 
     Args:
         p1: Tuple containing (name, inventory) of the sender.
@@ -112,7 +115,8 @@ def transaction(
 
 
 def run_analytics(players: dict[str, dict]) -> None:
-    """Generates analytics about all players' inventories.
+    """
+    Generates analytics about all players' inventories.
 
     Args:
         players: Dictionary containing all player names and their inventories.
@@ -173,15 +177,24 @@ def main() -> None:
     }
 
     print("=== Player Inventory System ===\n")
-    display_inventory("Yasuo", players['Yasuo'])
+    try:
+        display_inventory("Yasuo", players['Yasuo'])
+    except Exception as e:
+        print(f"Unexpected error while displaying inventory. {e}")
 
-    transaction(
-        ("Yasuo", players['Yasuo']),
-        ("Zac", players['Zac']),
-        "Refillable Potion", 1
-    )
+    try:
+        transaction(
+            ("Yasuo", players['Yasuo']),
+            ("Zac", players['Zac']),
+            "Refillable Potion", 1
+        )
+    except Exception as e:
+        print(f"Unexpected error while processing transaction. {e}")
 
-    run_analytics(players)
+    try:
+        run_analytics(players)
+    except Exception as e:
+        print(f"Unexpected error while analyzing. {e}")
 
 
 if __name__ == "__main__":

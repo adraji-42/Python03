@@ -1,7 +1,8 @@
 def get_all_unique_achievements(
     players_data: dict[str, set]
 ) -> set:
-    """Gather every unique achievement across all players.
+    """
+    Gather every unique achievement across all players.
 
     Args:
         players_data: Dictionary with player names and their sets.
@@ -20,10 +21,11 @@ def get_all_unique_achievements(
 def get_common_to_all(
     players_data: dict[str, set]
 ) -> set:
-    """Find achievements that every single player has unlocked.
+    """
+    Find achievements that every single player has unlocked.
 
     Args:
-        players_data: Dictionary with player names and their sets.
+        players_data: Dictionary with player names and their achievement sets.
 
     Returns:
         A set of achievements common to all players.
@@ -43,7 +45,8 @@ def get_common_to_all(
 def get_rare_achievements(
     players_data: dict[str, set]
 ) -> set:
-    """Identify achievements held by exactly one player.
+    """
+    Identify achievements held by exactly one player.
 
     Args:
         players_data: Dictionary with player names and their sets.
@@ -66,7 +69,8 @@ def diff_in_two_players(
     p1_name: str, p1_ach: set,
     p2_name: str, p2_ach: set
 ) -> None:
-    """Compare achievements between two specific players.
+    """
+    Compare achievements between two specific players.
 
     Args:
         p1_name: Name of the first player.
@@ -93,9 +97,20 @@ def main() -> None:
     for name, achs in players.items():
         print(f"Player {name} achievements: {achs}")
 
-    all_unique = get_all_unique_achievements(players)
-    common = get_common_to_all(players)
-    rare = get_rare_achievements(players)
+    try:
+        all_unique = get_all_unique_achievements(players)
+    except Exception as e:
+        print(f"Unexpected error while getting unique achivements. {e}")
+
+    try:
+        common = get_common_to_all(players)
+    except Exception as e:
+        print(f"Unexpected error while getting achivements common to all. {e}")
+
+    try:
+        rare = get_rare_achievements(players)
+    except Exception as e:
+        print(f"Unexpected error while getting rare achivements. {e}")
 
     print("\n=== Achievement Analytics ===")
     print(f"All unique achievements: {all_unique}")
@@ -103,9 +118,15 @@ def main() -> None:
     print(f"Common to all players: {common}")
     print(f"Rare achievements (1 player): {rare}")
 
-    diff_in_two_players(
-        "Chaos", players['Chaos'], "Spasha", players['Spasha']
-    )
+    try:
+        diff_in_two_players(
+            "Chaos", players['Chaos'], "Spasha", players['Spasha']
+        )
+    except Exception as e:
+        print(
+            "Unexpected error while "
+            f"getting the difference of two player-sets. {e}"
+        )
 
 
 if __name__ == "__main__":
