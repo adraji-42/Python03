@@ -129,5 +129,5 @@ def achievement_tracker() -> None:
         )
 
 
-if __name__ == "__achievement_tracker__":
+if __name__ == "__main__":
     achievement_tracker()
