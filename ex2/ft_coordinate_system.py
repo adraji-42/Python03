@@ -71,31 +71,48 @@ def main() -> None:
             f"Distance between {origin} and {coordinates}:"
             f"{calculating_distance(origin, coordinates):.1f}\n"
         )
+    except ValueError as error:
+        print(f"Error {error}")
     except Exception as error:
         print(f"Unexpected Erro: {error}")
 
-    print("Parsing coordinates: \"3,4,0\"")
+    str_coordinate = "3,4,0"
+    print(f"Parsing coordinates: \"{str_coordinate}\"")
     try:
-        position = position_parsing("3,4,0")
+        position = position_parsing(str_coordinate)
     except ValueError as error:
-        print(error)
+        print(f"Error {error}")
     except Exception as error:
         print(f"Unexpected Erro: {error}")
     else:
-        print(f"Distance between {origin} and {position}:"
-              f"{calculating_distance(origin, position):.1f}\n")
+        try:
+            print(
+                f"Distance between {origin} and {position}:"
+                f"{calculating_distance(origin, position):.1f}\n"
+            )
+        except ValueError as error:
+            print(f"Error {error}")
+        except Exception as error:
+            print(f"Unexpected Erro: {error}")
 
     bad_coordinates = "abc,def,ghi"
     print(f"Parsing invalid coordinates: \"{bad_coordinates}\"")
     try:
         position = position_parsing(bad_coordinates)
     except ValueError as error:
-        print(error, end="\n\n")
+        print(f"Error {error}", end="\n\n")
     except Exception as error:
         print(f"Unexpected Erro: {error}")
     else:
-        print(f"Distance between {origin} and {position}:"
-              f"{calculating_distance(origin, position):.1f}\n")
+        try:
+            print(
+                f"Distance between {origin} and {position}:"
+                f"{calculating_distance(origin, position):.1f}\n"
+            )
+        except ValueError as error:
+            print(f"Error {error}")
+        except Exception as error:
+            print(f"Unexpected Erro: {error}")
 
     print("Unpacking demonstration:")
     x, y, z = position

@@ -83,7 +83,7 @@ def diff_in_two_players(
     print(f"{p2_name} unique: {p2_ach.difference(p1_ach)}")
 
 
-def main() -> None:
+def achievement_tracker() -> None:
     """Initialize dynamic player data and display analytics."""
     players: dict[str, set] = {
         'Chaos': {'first_kill', 'level_10', 'treasure_hunter', 'speed_demon'},
@@ -129,5 +129,5 @@ def main() -> None:
         )
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__achievement_tracker__":
+    achievement_tracker()
