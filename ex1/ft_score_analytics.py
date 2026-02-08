@@ -29,7 +29,7 @@ def main() -> None:
 
     args = argv[1:]
 
-    print("=== Player Score Analytics ===")
+    print("=== Player Score Analytics ===\n")
     if len(args) == 0:
         print("No scores provided.\n"
               "\tUsage: python3 ft_score_analytics.py <score1> <score2> ...",

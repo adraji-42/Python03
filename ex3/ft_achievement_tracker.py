@@ -93,7 +93,7 @@ def main() -> None:
         }
     }
 
-    print("=== Achievement Tracker System ===")
+    print("=== Achievement Tracker System ===\n")
     for name, achs in players.items():
         print(f"Player {name} achievements: {achs}")
 

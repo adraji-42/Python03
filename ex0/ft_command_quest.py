@@ -9,7 +9,7 @@ def main() -> None:
         None (Uses sys.argv directly).
     """
 
-    print("=== Command Quest ===")
+    print("=== Command Quest ===\n")
 
     program_name, *args = argv
     args_len = len(args)
