@@ -46,7 +46,7 @@ def inventory_analysis(inventory: dict[str, int]) -> None:
     most_items = []
     least_items = []
 
-    for n, q in sorted(inventory.items(), key=lambda x: x[0], reverse=True):
+    for n, q in sorted(inventory.items(), key=lambda x: x[1], reverse=True):
         print(f"{n}: {q} units ({(q / total_items * 100):.1f}%)")
 
         if q > max_qty:
